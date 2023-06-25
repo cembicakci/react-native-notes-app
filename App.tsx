@@ -1,27 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NoteInput from './components/NoteInput';
+import Home from './components/Home';
 
 export default function App() {
 
-  const [text, setText] = useState<string>('')
+  const [isCreate, setIsCreate] = useState<boolean>(false)
 
-  const saveNote = async () => {
+  const saveNote = async (text: string) => {
+    setIsCreate(false)
     await AsyncStorage.setItem('note', text)
   }
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
-      <TextInput
-        multiline={true}
-        style={styles.textInput}
-        value={text}
-        onChangeText={(text) => setText(text)}
-      />
-      <Button title='Save note' onPress={() => { saveNote() }} />
+      {
+        isCreate ? (<NoteInput saveNote={saveNote} />) : (<Home toggleNewNote={(toggle) => { setIsCreate(toggle) }} />)
+      }
+
     </View>
   );
 }
@@ -32,14 +32,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textInput: {
-    backgroundColor: '#ffb70342',
-    width: '100%',
-    height: 200,
-    fontSize: 16,
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 20
   }
 });
