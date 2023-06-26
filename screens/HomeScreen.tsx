@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { ScreenNavigationProp } from '../types';
-import { getNote } from '../services/NoteStoreService';
+import { Note, getAllNotes, getNote } from '../services/NoteStoreService';
 
 const HomeScreen = () => {
     const navigation = useNavigation<ScreenNavigationProp>();
 
-    const [data, setData] = useState<string>('')
+    const [data, setData] = useState<Note[]>([])
 
-    useFocusEffect(() => {
-        getNote().then((response) => { setData(response ?? '') })
-    })
+    useFocusEffect(
+        useCallback(() => {
+            getAllNotes().then(result => setData(result.notes))
+            // getNote().then((response) => { setData(response ?? '') })
+        }, [])
+    )
+    console.log(data)
 
     return (
         <>
             <View>
-                <Text>{data}</Text>
+                {
+                    data.map((note) => (
+                        <Text key={note.id}>{note.text}</Text>
+                    ))
+                }
             </View>
 
             <Button title='New Note' onPress={() => { navigation.navigate('EditNoteScreen') }} />
