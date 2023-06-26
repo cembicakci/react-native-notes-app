@@ -26,7 +26,10 @@ export default function App() {
             headerRight: () => <NewNoteButton />
           }}
         />
-        <Stack.Screen name="EditNoteScreen" component={EditNoteScreen} />
+        <Stack.Screen
+          name="EditNoteScreen"
+          component={EditNoteScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

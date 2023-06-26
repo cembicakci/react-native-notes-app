@@ -39,3 +39,11 @@ export const saveNote = async (text: string, noteId: string | undefined) => {
 
     await AsyncStorage.setItem(STORE_KEY, JSON.stringify(noteStore))
 }
+
+export const deleteNote = async (noteId: string) => {
+    const noteStore = await getAllNotes()
+    const noteIndex = noteStore.notes.findIndex(note => note.id === noteId)
+    noteStore.notes.splice(noteIndex, 1)
+    const newStore = JSON.stringify(noteStore)
+    await AsyncStorage.setItem(STORE_KEY, newStore)
+}

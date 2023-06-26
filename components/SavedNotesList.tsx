@@ -17,7 +17,6 @@ const SavedNotesList = () => {
             getAllNotes().then(result => setData(result.notes))
         }, [])
     )
-    console.log(data)
 
     return (
         <View style={styles.container}>
