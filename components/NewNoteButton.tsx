@@ -9,7 +9,7 @@ const NewNoteButton = () => {
     const navigation = useNavigation<ScreenNavigationProp>()
 
     return (
-        <Pressable onPress={() => { navigation.navigate('EditNoteScreen') }}>
+        <Pressable onPress={() => { navigation.navigate('EditNoteScreen', { noteId: undefined }) }}>
             <FontAwesome name='pencil-square-o' size={30} color={'#ffb703'} />
         </Pressable>
     )
