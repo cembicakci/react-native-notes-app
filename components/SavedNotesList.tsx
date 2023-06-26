@@ -1,10 +1,14 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Note, getAllNotes } from "../services/NoteStoreService";
+import { ScreenNavigationProp } from "../types";
 
 const SavedNotesList = () => {
+
+    const navigation = useNavigation<ScreenNavigationProp>();
 
     const [data, setData] = useState<Note[]>([])
 
@@ -20,11 +24,13 @@ const SavedNotesList = () => {
             <ScrollView>
                 {
                     data.map((note) => (
-                        <View style={styles.row} key={note.id}>
-                            <Text style={styles.note}>
-                                {note.text.length === 0 ? '(Blank Note)' : note.text}
-                            </Text>
-                        </View>
+                        <Pressable key={note.id} onPress={() => { navigation.navigate('EditNoteScreen', { noteId: note.id }) }}>
+                            <View style={styles.row}>
+                                <Text style={styles.note}>
+                                    {note.text.length === 0 ? '(Blank Note)' : note.text}
+                                </Text>
+                            </View>
+                        </Pressable>
                     ))
                 }
             </ScrollView>

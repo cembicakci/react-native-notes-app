@@ -1,13 +1,20 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
+import { useRoute } from '@react-navigation/native'
 
 import NoteInput from '../components/NoteInput'
 import { saveNote } from '../services/NoteStoreService'
+import { EditScreenRouteProp } from '../types'
 
 const EditNoteScreen = () => {
 
+    const route = useRoute<EditScreenRouteProp>()
+    const noteId = route?.params?.noteId
+
+    console.log(route)
+
     return (
-        <NoteInput saveNote={saveNote} />
+        <NoteInput saveNote={saveNote} noteId={noteId} />
     )
 }
 
