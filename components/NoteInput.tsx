@@ -16,6 +16,7 @@ const NoteInput = ({ saveNote }: Props) => {
                 style={styles.textInput}
                 value={text}
                 onChangeText={(text) => setText(text)}
+                autoFocus={true}
             />
             <Button title='Save note' onPress={() => { saveNote(text) }} />
         </>

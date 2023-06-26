@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from 'react-native';
 
 export type Note = {
     text: string,
@@ -30,6 +29,6 @@ export const getNote = async (id: string) => {
 export const saveNote = async (text: string) => {
     const noteStore = await getAllNotes()
     const notes = [...noteStore.notes, { id: Date.now().toString(), text: text }]
-    
+
     await AsyncStorage.setItem(STORE_KEY, JSON.stringify({ notes: notes }))
 }
